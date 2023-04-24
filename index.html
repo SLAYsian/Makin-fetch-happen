@@ -15,42 +15,16 @@
   </head>
   <body>
     <!-- SECTION: Header -->
-    <header class="py-3 text-bg-dark">
+    <header class="p-3 text-bg-dark">
       <div
         class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start"
       >
-        <a
-          href="/"
-          class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none"
-        >
-          <svg
-            class="bi me-2"
-            width="40"
-            height="32"
-            role="img"
-            aria-label="Bootstrap"
-          >
-            <use xlink:href="#bootstrap"></use>
-          </svg>
-        </a>
         <h1>
           <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-cloud-sun-fill" viewBox="0 0 16 16">
             <path d="M11.473 11a4.5 4.5 0 0 0-8.72-.99A3 3 0 0 0 3 16h8.5a2.5 2.5 0 0 0 0-5h-.027z"/>
             <path d="M10.5 1.5a.5.5 0 0 0-1 0v1a.5.5 0 0 0 1 0v-1zm3.743 1.964a.5.5 0 1 0-.707-.707l-.708.707a.5.5 0 0 0 .708.708l.707-.708zm-7.779-.707a.5.5 0 0 0-.707.707l.707.708a.5.5 0 1 0 .708-.708l-.708-.707zm1.734 3.374a2 2 0 1 1 3.296 2.198c.199.281.372.582.516.898a3 3 0 1 0-4.84-3.225c.352.011.696.055 1.028.129zm4.484 4.074c.6.215 1.125.59 1.522 1.072a.5.5 0 0 0 .039-.742l-.707-.707a.5.5 0 0 0-.854.377zM14.5 6.5a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1h-1z"/>
           </svg>
           WEATHER DASHBOARD</h1>
-        <!-- <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-            <li><a href="#" class="nav-link px-2 text-secondary">Home</a></li>
-            <li><a href="#" class="nav-link px-2 text-white">Features</a></li>
-            <li><a href="#" class="nav-link px-2 text-white">Pricing</a></li>
-            <li><a href="#" class="nav-link px-2 text-white">FAQs</a></li>
-            <li><a href="#" class="nav-link px-2 text-white">About</a></li>
-          </ul> -->
-
-        <!-- <div class="text-end">
-            <button type="button" class="btn btn-outline-light me-2">Login</button>
-            <button type="button" class="btn btn-warning">Sign-up</button>
-          </div> -->
       </div>
     </header>
     <main>
@@ -62,17 +36,10 @@
               class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark py-5"
               style="width: 280px"
             >
-              <!-- <a
-                href="/"
-                class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none"
-              >
-                <svg class="bi pe-none me-2" width="40" height="32">
-                  <use xlink:href="#bootstrap"></use>
-                </svg> -->
                 <h3 class="fs-4 pb-2">Search by City</h3>
-              <!-- </a> -->
+
               <form
-                class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3"
+                class="search-form col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3"
                 role="search"
               >
                 <input
@@ -83,119 +50,62 @@
                 />
               </form>
               <hr />
-              <ul class="nav nav-pills flex-column mb-auto">
-                <li class="nav-item">
+              <ul class="search-history nav nav-pills flex-column mb-auto">
+                <li >
                   <a href="#" class="nav-link active city1" aria-current="page">
-                    <!-- <svg class="bi pe-none me-2" width="16" height="16">
-                      <use xlink:href="#home"></use>
-                    </svg> -->
+          
                     City 1
                   </a>
                 </li>
                 <li>
                   <a href="#" class="nav-link text-white city2">
-                    <!-- <svg class="bi pe-none me-2" width="16" height="16">
-                      <use xlink:href="#speedometer2"></use>
-                    </svg> -->
+              
                     City 2
                   </a>
                 </li>
                 <li>
                   <a href="#" class="nav-link text-white city3">
-                    <!-- <svg class="bi pe-none me-2" width="16" height="16">
-                      <use xlink:href="#table"></use>
-                    </svg> -->
+                
                     City 3
                   </a>
                 </li>
                 <li>
                   <a href="#" class="nav-link text-white city4">
-                    <!-- <svg class="bi pe-none me-2" width="16" height="16">
-                      <use xlink:href="#grid"></use>
-                    </svg> -->
+           
                     City 4
                   </a>
                 </li>
                 <li>
                   <a href="#" class="nav-link text-white city5">
-                    <!-- <svg class="bi pe-none me-2" width="16" height="16">
-                      <use xlink:href="#people-circle"></use>
-                    </svg> -->
+                 
                     City 5
                   </a>
                 </li>
               </ul>
               <hr />
-              <!-- <div class="dropdown">
-          <a
-            href="#"
-            class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            <img
-              src="https://github.com/mdo.png"
-              alt=""
-              width="32"
-              height="32"
-              class="rounded-circle me-2"
-            />
-            <strong>mdo</strong>
-          </a>
-          <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
-            <li><a class="dropdown-item" href="#">New project...</a></li>
-            <li><a class="dropdown-item" href="#">Settings</a></li>
-            <li><a class="dropdown-item" href="#">Profile</a></li>
-            <li><hr class="dropdown-divider" /></li>
-            <li><a class="dropdown-item" href="#">Sign out</a></li>
-          </ul>
-        </div> -->
+
             </div>
           </section>
 
           <!-- SECTION: HERO MAIN CITY -->
           <div class="col-8 px-4 py-5">
-            <!-- <img
-              class="d-block mx-auto mb-4"
-              src="/docs/5.2/assets/brand/bootstrap-logo.svg"
-              alt=""
-              width="72"
-              height="57"
-            /> -->
+  
             <h2 class="display-5 fw-bold selected-city">City Selected</h2>
             <p id="current-city-weather"></p>
-            <!-- <div class="col-lg-6"> -->
+     
               <ul class="lead list-unstyled mt-3 mb-4">
                 <li id="selected-city-temp">Temp:</li>
                 <li id="selected-city-wind">Wind:</li>
                 <li id="selected-city-humid">Humidity:</li>
               </ul>
-              <!-- <p class="lead mb-4">
-                Quickly design and customize responsive mobile-first sites with
-                Bootstrap, the world’s most popular front-end open source
-                toolkit, featuring Sass variables and mixins, responsive grid
-                system, extensive prebuilt components, and powerful JavaScript
-                plugins.
-              </p> -->
-              <!-- <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-                <button type="button" class="btn btn-primary btn-lg px-4 gap-3">
-                  Primary button
-                </button>
-                <button
-                  type="button"
-                  class="btn btn-outline-secondary btn-lg px-4"
-                >
-                  Secondary
-                </button>
-              </div> -->
-            <!-- </div> -->
+
           </div>
         </section>
 
           <!-- SECTION: 5 DAY FORECAST -->
           <section class="five-day p-5">
             <h2>5 Day Forecast:</h2>
-            <div class="row row-cols-1 row-cols-md-5 mb-3">
+            <div class="forecast-container row row-cols-1 row-cols-md-5 mb-3">
               <div class="col">
                 <div class="card mb-4 rounded-3 shadow-sm">
                   <div class="card-header py-3">
@@ -203,21 +113,13 @@
                   </div>
                   <div class="card-body">
                     <!-- NOTES: Image? -->
-                    <!-- <h3 class="card-title pricing-card-title">
-                      $0<small class="text-muted fw-light">/mo</small>
-                    </h3> -->
                     <ul class="list-unstyled mt-3 mb-4">
                       <li id="forecast-temp-1">Temp:</li>
                       <li id="forecast-wind-1">Wind:</li>
                       <li id="forecast-humid-1">Humidity:</li>
                      
                     </ul>
-                    <!-- <button
-                      type="button"
-                      class="w-100 btn btn-lg btn-outline-primary"
-                    >
-                      Sign up for free
-                    </button> -->
+              
                   </div>
                 </div>
               </div>
@@ -228,18 +130,14 @@
                   </div>
                   <div class="card-body">
                     <!-- NOTES: Image? -->
-                    <!-- <h3 class="card-title pricing-card-title">
-                      $15<small class="text-muted fw-light">/mo</small>
-                    </h3> -->
+               
                     <ul class="list-unstyled mt-3 mb-4">
                       <li id="forecast-temp-2">Temp:</li>
                       <li id="forecast-wind-2">Wind:</li>
                       <li id="forecast-humid-2">Humidity:</li>
                     
                     </ul>
-                    <!-- <button type="button" class="w-100 btn btn-lg btn-primary">
-                      Get started
-                    </button> -->
+             
                   </div>
                 </div>
               </div>
@@ -249,21 +147,14 @@
                     <h3 class="my-0 fw-normal" id="forecast-date-3">Date</h3>
                   </div>
                   <div class="card-body">
-                    <!-- <h3 class="card-title">
-                      $0<small class="text-muted fw-light">/mo</small>
-                    </h3> -->
+              
                     <ul class="list-unstyled mt-3 mb-4">
                       <li id="forecast-temp-3">Temp:</li>
                       <li id="forecast-wind-3">Wind:</li>
                       <li id="forecast-humid-3">Humidity:</li>
                       
                     </ul>
-                    <!-- <button
-                      type="button"
-                      class="w-100 btn btn-lg btn-outline-primary"
-                    >
-                      Sign up for free
-                    </button> -->
+            
                   </div>
                 </div>
               </div>
@@ -274,21 +165,14 @@
                   </div>
                   <div class="card-body">
                     <!-- NOTES: Image? -->
-                    <!-- <h3 class="card-title">
-                      $0<small class="text-muted fw-light">/mo</small>
-                    </h3> -->
+               
                     <ul class="list-unstyled mt-3 mb-4">
                       <li id="forecast-temp-4">Temp:</li>
                       <li id="forecast-wind-4">Wind:</li>
                       <li id="forecast-humid-4">Humidity:</li>
                       
                     </ul>
-                    <!-- <button
-                      type="button"
-                      class="w-100 btn btn-lg btn-outline-primary"
-                    >
-                      Sign up for free
-                    </button> -->
+         
                   </div>
                 </div>
               </div>
@@ -299,21 +183,14 @@
                   </div>
                   <div class="card-body">
                     <!-- NOTES: Image? -->
-                    <!-- <h3 class="card-title">
-                      $0<small class="text-muted fw-light">/mo</small>
-                    </h3> -->
+               
                     <ul class="list-unstyled mt-3 mb-4">
                       <li id="forecast-temp-5">Temp:</li>
                       <li id="forecast-wind-5">Wind:</li>
                       <li id="forecast-humid-5">Humidity:</li>
                 
                     </ul>
-                    <!-- <button
-                      type="button"
-                      class="w-100 btn btn-lg btn-outline-primary"
-                    >
-                      Sign up for free
-                    </button> -->
+        
                   </div>
                 </div>
               </div>
