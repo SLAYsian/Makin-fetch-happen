@@ -39,18 +39,20 @@
                 <h3 class="fs-4 pb-2">Search by City</h3>
 
               <form
-                class="search-form col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3"
+              id="search-form"
+                class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3"
                 role="search"
               >
                 <input
-                  type="search"
+                  type="text"
+                  id="city"
                   class="form-control form-control-dark text-bg-dark"
-                  placeholder="Enter City..."
+                  placeholder="Enter city or postal code..."
                   aria-label="Search"
                 />
               </form>
               <hr />
-              <ul class="search-history nav nav-pills flex-column mb-auto">
+              <ul class="list-group nav nav-pills flex-column mb-auto">
                 <li >
                   <a href="#" class="nav-link active city1" aria-current="page">
           
@@ -88,10 +90,10 @@
           </section>
 
           <!-- SECTION: HERO MAIN CITY -->
-          <div class="col-8 px-4 py-5">
+          <div id="current-weather" class="col-8 px-4 py-5">
   
             <h2 class="display-5 fw-bold selected-city">City Selected</h2>
-            <p id="current-city-weather"></p>
+            <p ></p>
      
               <ul class="lead list-unstyled mt-3 mb-4">
                 <li id="selected-city-temp">Temp:</li>
@@ -105,7 +107,7 @@
           <!-- SECTION: 5 DAY FORECAST -->
           <section class="five-day p-5">
             <h2>5 Day Forecast:</h2>
-            <div class="forecast-container row row-cols-1 row-cols-md-5 mb-3">
+            <div id="forecast-container" class="row row-cols-1 row-cols-md-5 mb-3">
               <div class="col">
                 <div class="card mb-4 rounded-3 shadow-sm">
                   <div class="card-header py-3">
