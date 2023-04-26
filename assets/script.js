@@ -9,8 +9,11 @@ let cityName = document.createElement("h3");
 let weatherIcon = document.createElement("img");
 let temperature = document.createElement("p");
 let humidity = document.createElement("p");
-let wind = document.createElement("p");
+let windSpeedEl = document.createElement("p");
 let errorMsg = document.createElement("h3");
+
+let forecastHeaderEl = document.querySelectorAll(".card-header");
+let forecastBodyEl = document.querySelectorAll(".card-body");
 
 const apiKey = "a7721d270b5b8958e55f066db552d8a1";
 let city;
@@ -41,44 +44,79 @@ function fetchWeatherData(query) {
       if (response.ok) {
         response.json().then(function (data) {
           displayCurrentWeather(data);
+          displayForecast(data);
           console.log(data);
         });
       } else {
         errorMsg.textContent = `Error: ${response.status} ${response.statusText}`;
         currentWeather.append(errorMsg);
+        forecastBodyEl.append(errorMsg);
       }
     })
     .catch(function (error) {
       currentWeather.append(errorMsg);
+      forecastBodyEl.append(errorMsg);
     });
 }
 
 // SECTION: ADD FUNCTION - DISPLAY CURRENT WEATHER
 function displayCurrentWeather(data) {
-  let city = data.city;
-  let timeList = data.list;
-  let current = timeList[0];
-  let dateTxt = current.dt_txt;
-  let currentMain = current.main;
-  let weather = current.weather;
-  let currentWind = current.wind;
-  // let today = today.format("dddd MMMM D, YYYY");
-  let currentDate = dayjs(dateTxt).format("ddd MMM D, YYYY");
+  let { city, list } = data;
+
+  let current = list[0];
+  let { dt_txt, main, weather, wind } = current;
+
+  let currentDate = dayjs(dt_txt).format("ddd MMM D, YYYY");
   cityName.textContent = `${city.name} (${currentDate})`;
   weatherIcon.src = `http://openweathermap.org/img/wn/${weather[0].icon}@2x.png`;
   weatherIcon.alt = `${weather[0].description}`;
-  temperature.textContent = `Temperature: ${Math.round(currentMain.temp)}˚F`;
-  humidity.textContent = `Humidity: ${currentMain.humidity}%`;
-  wind.textContent = `Wind Speed: ${Math.round(currentWind.speed)} m/s`;
+  temperature.textContent = `Temperature: ${Math.round(main.temp)} °F`;
+  humidity.textContent = `Humidity: ${main.humidity}%`;
+  windSpeedEl.textContent = `Wind Speed: ${Math.round(wind.speed)} m/s`;
 
   currentWeather.append(cityName);
   currentWeather.append(weatherIcon);
   currentWeather.append(temperature);
   currentWeather.append(humidity);
-  currentWeather.append(wind);
+  currentWeather.append(windSpeedEl);
 }
 
 // SECTION: DISPLAY 5-DAY WEATHER FORECAST
+function displayForecast(data) {
+  let { list } = data;
+  let dailyData = list.filter((item) => {
+    let time = new Date(item.dt_txt).getHours();
+    return time === 12;
+  });
+
+  dailyData.slice(0, 5).forEach((day, index) => {
+    let { dt_txt, main, weather, wind } = day;
+    let date = new Date(dt_txt).toLocaleDateString();
+
+    let forecastContainerEl = document.getElementById("forecast-container");
+    let forecastDate = document.createElement("h4");
+    let forecastIcon = document.createElement("img");
+    let forecastTemp = document.createElement("p");
+    let forecastHumidity = document.createElement("p");
+    let forecastWind = document.createElement("p");
+
+    forecastDate.textContent = `${date}`;
+    forecastIcon.src = `http://openweathermap.org/img/wn/${weather[0].icon}@2x.png`;
+    forecastIcon.alt = `${weather[0].description}`;
+    forecastTemp.textContent = `Temperature: ${Math.round(main.temp)} °F`;
+    forecastWind.textContent = `Wind Speed: ${Math.round(wind.speed)} m/s`;
+    forecastHumidity.textContent = `Humidity: ${main.humidity}%`;
+
+    forecastContainerEl.classList.remove("visually-hidden");
+    forecastBodyEl[index].innerHTML = "";
+    forecastHeaderEl[index].innerHTML = "";
+    forecastHeaderEl[index].append(forecastDate);
+    forecastBodyEl[index].append(forecastIcon);
+    forecastBodyEl[index].append(forecastTemp);
+    forecastBodyEl[index].append(forecastHumidity);
+    forecastBodyEl[index].append(forecastWind);
+  });
+}
 
 // SECTION: ADD FUNCTION - SAVE CITIES TO SEARCH HISTORY / LOCAL STORAGE
 
