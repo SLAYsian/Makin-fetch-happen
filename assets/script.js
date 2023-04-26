@@ -11,7 +11,6 @@ let temperature = document.createElement("p");
 let humidity = document.createElement("p");
 let windSpeedEl = document.createElement("p");
 let errorMsg = document.createElement("h3");
-
 let forecastHeaderEl = document.querySelectorAll(".card-header");
 let forecastBodyEl = document.querySelectorAll(".card-body");
 
