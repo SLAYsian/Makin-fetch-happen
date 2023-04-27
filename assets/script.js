@@ -1,7 +1,7 @@
 "use strict";
 // SECTION: DOM ELEMENTS
 let searchForm = $("#search-form");
-let searchHistory = $(".list-group");
+let savedCityLinkEl = $(".nav-link");
 let currentWeather = $("#current-weather");
 let searchInput = $("#city");
 let cityName = document.createElement("h3");
@@ -44,7 +44,7 @@ function fetchWeatherData(query) {
           displayCurrentWeather(data);
           displayForecast(data);
           addToSavedCities(data.city.name);
-          console.log(data);
+          // console.log(data);
         });
       } else {
         errorMsg.textContent = `Error: ${response.status} ${response.statusText}`;
@@ -54,7 +54,7 @@ function fetchWeatherData(query) {
     })
     .catch(function (error) {
       currentWeather.append(errorMsg);
-      forecastBodyEl.append(errorMsg);
+      // forecastBodyEl.append(errorMsg);
     });
 }
 
@@ -151,5 +151,10 @@ function loadSavedCities() {
 }
 
 // SECTION: ADD EVENT - CLICK SAVED CITY
+savedCityLinkEl.on("click", (event) => {
+  event.preventDefault();
+  let city = event.target.textContent;
+  fetchWeatherData(city);
+});
 
 loadSavedCities();
