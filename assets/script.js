@@ -1,6 +1,5 @@
 "use strict";
 // SECTION: DOM ELEMENTS
-
 let searchForm = $("#search-form");
 let searchHistory = $(".list-group");
 let currentWeather = $("#current-weather");
@@ -44,6 +43,7 @@ function fetchWeatherData(query) {
         response.json().then(function (data) {
           displayCurrentWeather(data);
           displayForecast(data);
+          addToSavedCities(data.city.name);
           console.log(data);
         });
       } else {
@@ -60,19 +60,20 @@ function fetchWeatherData(query) {
 
 // SECTION: ADD FUNCTION - DISPLAY CURRENT WEATHER
 function displayCurrentWeather(data) {
+  // NOTES: select these values from each object/ array
   let { city, list } = data;
-
   let current = list[0];
   let { dt_txt, main, weather, wind } = current;
-
+  // NOTES: Format date using dayjs
   let currentDate = dayjs(dt_txt).format("ddd MMM D, YYYY");
+  // NOTES: Set text Context based on query
   cityName.textContent = `${city.name} (${currentDate})`;
   weatherIcon.src = `http://openweathermap.org/img/wn/${weather[0].icon}@2x.png`;
   weatherIcon.alt = `${weather[0].description}`;
   temperature.textContent = `Temperature: ${Math.round(main.temp)} °F`;
   humidity.textContent = `Humidity: ${main.humidity}%`;
   windSpeedEl.textContent = `Wind Speed: ${Math.round(wind.speed)} m/s`;
-
+  // NOTES: append currentWeather element to display the values for each variable
   currentWeather.append(cityName);
   currentWeather.append(weatherIcon);
   currentWeather.append(temperature);
@@ -118,5 +119,37 @@ function displayForecast(data) {
 }
 
 // SECTION: ADD FUNCTION - SAVE CITIES TO SEARCH HISTORY / LOCAL STORAGE
+function addToSavedCities(cityToSave) {
+  let savedCities = JSON.parse(localStorage.getItem("savedCities")) || [];
+  // NOTES: Does the Saved Cities already include the city?
+  if (savedCities.includes(cityToSave)) {
+    return;
+  }
+  // NOTES: Add to the beginning of the list
+  savedCities.unshift(cityToSave);
+  // NOTES: Only save 10 cities
+  savedCities = savedCities.slice(0, 10);
+  // NOTES: Local storage
+  localStorage.setItem("savedCities", JSON.stringify(savedCities));
+  // NOTES: For loop to updated saved cities list with the savedCities array
+  for (let i = 0; i < savedCities.length; i++) {
+    let cityListItem = document.querySelector(`.city-${i}`);
+    cityListItem.textContent = savedCities[i];
+    cityListItem.classList.remove("visually-hidden");
+  }
+}
+
+// SECTION: EVENT - LOAD SAVED CITIES
+function loadSavedCities() {
+  let savedCities = JSON.parse(localStorage.getItem("savedCities")) || [];
+
+  for (let i = 0; i < savedCities.length; i++) {
+    let cityListItem = document.querySelector(`.city-${i}`);
+    cityListItem.textContent = savedCities[i];
+    cityListItem.classList.remove("visually-hidden");
+  }
+}
 
 // SECTION: ADD EVENT - CLICK SAVED CITY
+
+loadSavedCities();
