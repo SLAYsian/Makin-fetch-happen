@@ -15,7 +15,7 @@ let forecastBodyEl = document.querySelectorAll(".card-body");
 
 const apiKey = "a7721d270b5b8958e55f066db552d8a1";
 let city;
-const queryURL = `http.api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=imperial`;
+const queryURL = `https.api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=imperial`;
 
 // api.openweathermap.org/data/2.5/forecast?q={city name},{state code},{country code}&appid={API key}
 // fetch(queryURL);
@@ -24,10 +24,9 @@ const queryURL = `http.api.openweathermap.org/data/2.5/forecast?q=${city}&appid=
 searchForm.on("submit", (event) => {
   event.preventDefault();
   let city = event.target.city.value;
+  // fetchCurrentWeatherData(city);
   fetchWeatherData(city);
 });
-
-// NOTES: ERROR MESSAGE FUNCTION:
 
 // SECTION: ADD FUNCTION - FETCH WEATHER FUNCTION
 function fetchWeatherData(query) {
@@ -36,7 +35,7 @@ function fetchWeatherData(query) {
   let searchParam = isPostal ? `zip=${query}` : `q=${query}`;
 
   fetch(
-    `http://api.openweathermap.org/data/2.5/forecast?${searchParam}&appid=${apiKey}&units=imperial`
+    `https://api.openweathermap.org/data/2.5/forecast?${searchParam}&appid=${apiKey}&units=imperial`
   )
     .then(function (response) {
       if (response.ok) {
@@ -44,7 +43,7 @@ function fetchWeatherData(query) {
           displayCurrentWeather(data);
           displayForecast(data);
           addToSavedCities(data.city.name);
-          // console.log(data);
+          console.log(data);
         });
       } else {
         errorMsg.textContent = `Error: ${response.status} ${response.statusText}`;
@@ -54,7 +53,6 @@ function fetchWeatherData(query) {
     })
     .catch(function (error) {
       currentWeather.append(errorMsg);
-      // forecastBodyEl.append(errorMsg);
     });
 }
 
@@ -64,15 +62,18 @@ function displayCurrentWeather(data) {
   let { city, list } = data;
   let current = list[0];
   let { dt_txt, main, weather, wind } = current;
+  // let { name, dt, main, weather, wind } = data;
   // NOTES: Format date using dayjs
   let currentDate = dayjs(dt_txt).format("ddd MMM D, YYYY");
+  // let currentDate = dayjs(dt * 1000).format("ddd MMM D, YYYY");
   // NOTES: Set text Context based on query
+  // cityName.textContent = `${city.name} (${currentDate})`;
   cityName.textContent = `${city.name} (${currentDate})`;
-  weatherIcon.src = `http://openweathermap.org/img/wn/${weather[0].icon}@2x.png`;
+  weatherIcon.src = `https://openweathermap.org/img/wn/${weather[0].icon}@2x.png`;
   weatherIcon.alt = `${weather[0].description}`;
-  temperature.textContent = `Temperature: ${Math.round(main.temp)} °F`;
+  temperature.textContent = `Temp: ${Math.round(main.temp)} °F`;
   humidity.textContent = `Humidity: ${main.humidity}%`;
-  windSpeedEl.textContent = `Wind Speed: ${Math.round(wind.speed)} m/s`;
+  windSpeedEl.textContent = `Wind: ${Math.round(wind.speed)} MPH`;
   // NOTES: append currentWeather element to display the values for each variable
   currentWeather.append(cityName);
   currentWeather.append(weatherIcon);
@@ -84,12 +85,24 @@ function displayCurrentWeather(data) {
 // SECTION: DISPLAY 5-DAY WEATHER FORECAST
 function displayForecast(data) {
   let { list } = data;
-  let dailyData = list.filter((item) => {
-    let time = new Date(item.dt_txt).getHours();
-    return time === 12;
-  });
 
-  dailyData.slice(0, 5).forEach((day, index) => {
+  // let dailyData = list.filter((item) => {
+  //   let time = new Date(item.dt_txt).getHours();
+  //   return time === 12;
+  // });
+
+  let dailyData = [];
+  let currentDate = "";
+
+  list.forEach((item) => {
+    let itemDate = new Date(item.dt_txt).toLocaleDateString();
+    // let todayDate = new Date().toLocaleDateString();
+    if (itemDate !== currentDate) {
+      dailyData.push(item);
+      currentDate = itemDate;
+    }
+  });
+  dailyData.slice(1, 6).forEach((day, index) => {
     let { dt_txt, main, weather, wind } = day;
     let date = new Date(dt_txt).toLocaleDateString();
 
@@ -101,10 +114,10 @@ function displayForecast(data) {
     let forecastWind = document.createElement("p");
 
     forecastDate.textContent = `${date}`;
-    forecastIcon.src = `http://openweathermap.org/img/wn/${weather[0].icon}@2x.png`;
+    forecastIcon.src = `https://openweathermap.org/img/wn/${weather[0].icon}@2x.png`;
     forecastIcon.alt = `${weather[0].description}`;
-    forecastTemp.textContent = `Temperature: ${Math.round(main.temp)} °F`;
-    forecastWind.textContent = `Wind Speed: ${Math.round(wind.speed)} m/s`;
+    forecastTemp.textContent = `Temp: ${Math.round(main.temp)} °F`;
+    forecastWind.textContent = `Wind: ${Math.round(wind.speed)} MPH`;
     forecastHumidity.textContent = `Humidity: ${main.humidity}%`;
 
     forecastContainerEl.classList.remove("visually-hidden");
