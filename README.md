@@ -21,6 +21,7 @@ I want to be able to check today's weather forecast for any city I choose. I lik
 [Live Deployment](https://slaysian.github.io/Makin-fetch-happen/)
 
 ### Screenshots:
+![Screenshot 2023-04-27 at 11 57 53 PM](https://user-images.githubusercontent.com/127693250/235050881-4eb2415b-f36b-47c1-87ab-c200df516c65.png)
 
 ### References:
 
