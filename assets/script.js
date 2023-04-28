@@ -15,16 +15,13 @@ let forecastBodyEl = document.querySelectorAll(".card-body");
 
 const apiKey = "a7721d270b5b8958e55f066db552d8a1";
 let city;
-// const queryURL = `https.api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=imperial`;
 
 // api.openweathermap.org/data/2.5/forecast?q={city name},{state code},{country code}&appid={API key}
-// fetch(queryURL);
 
 // SECTION: ADD EVENT LISTENER - SUBMIT CITY/ZIP
 searchForm.on("submit", (event) => {
   event.preventDefault();
   let city = event.target.city.value;
-  // fetchCurrentWeatherData(city);
   fetchWeatherData(city);
 });
 
@@ -35,23 +32,43 @@ function fetchWeatherData(query) {
   let searchParam = isPostal ? `zip=${query}` : `q=${query}`;
 
   fetch(
-    `https://api.openweathermap.org/data/2.5/forecast?${searchParam}&appid=${apiKey}&units=imperial`
+    `https://api.openweathermap.org/data/2.5/weather?${searchParam}&appid=${apiKey}&units=imperial`
   )
     .then(function (response) {
       if (response.ok) {
-        response.json().then(function (data) {
-          displayCurrentWeather(data);
-          displayForecast(data);
-          addToSavedCities(data.city.name);
-          console.log(data);
-        });
+        return response.json();
       } else {
-        errorMsg.textContent = `Error: ${response.status} ${response.statusText}`;
-        currentWeather.append(errorMsg);
-        forecastBodyEl.append(errorMsg);
+        throw new Error(`${response.status} ${response.statusText}`);
       }
     })
+
+    .then((data) => {
+      displayCurrentWeather(data);
+      console.log(data);
+    })
+
     .catch(function (error) {
+      errorMsg.textContent = `Error: ${error.message}`;
+      currentWeather.append(errorMsg);
+    });
+
+  fetch(
+    `https://api.openweathermap.org/data/2.5/forecast?${searchParam}&appid=${apiKey}&units=imperial`
+  )
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error(`${response.status} ${response.statusText}`);
+      }
+    })
+    .then((data) => {
+      displayForecast(data);
+      addToSavedCities(data.city.name);
+      console.log(data);
+    })
+    .catch((error) => {
+      errorMsg.textContent = `Error: ${error.message}`;
       currentWeather.append(errorMsg);
     });
 }
@@ -59,16 +76,16 @@ function fetchWeatherData(query) {
 // SECTION: ADD FUNCTION - DISPLAY CURRENT WEATHER
 function displayCurrentWeather(data) {
   // NOTES: select these values from each object/ array
-  let { city, list } = data;
-  let current = list[0];
-  let { dt_txt, main, weather, wind } = current;
-  // let { name, dt, main, weather, wind } = data;
+  // let { city, list } = data;
+  // let current = list[0];
+  // let { dt_txt, main, weather, wind } = current;
+  let { name, dt, main, weather, wind } = data;
   // NOTES: Format date using dayjs
-  let currentDate = dayjs(dt_txt).format("ddd MMM D, YYYY");
-  // let currentDate = dayjs(dt * 1000).format("ddd MMM D, YYYY");
+  // let currentDate = dayjs(dt_txt).format("ddd MMM D, YYYY");
+  let currentDate = dayjs(dt * 1000).format("ddd MMM D, YYYY");
   // NOTES: Set text Context based on query
   // cityName.textContent = `${city.name} (${currentDate})`;
-  cityName.textContent = `${city.name} (${currentDate})`;
+  cityName.textContent = `${name} (${currentDate})`;
   weatherIcon.src = `https://openweathermap.org/img/wn/${weather[0].icon}@2x.png`;
   weatherIcon.alt = `${weather[0].description}`;
   temperature.textContent = `Temp: ${Math.round(main.temp)} °F`;
@@ -85,11 +102,6 @@ function displayCurrentWeather(data) {
 // SECTION: DISPLAY 5-DAY WEATHER FORECAST
 function displayForecast(data) {
   let { list } = data;
-
-  // let dailyData = list.filter((item) => {
-  //   let time = new Date(item.dt_txt).getHours();
-  //   return time === 12;
-  // });
 
   let dailyData = [];
   let currentDate = "";
